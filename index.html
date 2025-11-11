@@ -98,11 +98,6 @@ h1, h2 {
     padding-left: 20px;
     box-sizing: border-box;
     position: relative;
-    /* Since content is replaced, overflow-y is not strictly needed here, 
-       but if loaded content is long, it should scroll the document or the wrapper. 
-       Let's assume document scroll for simplicity if content exceeds viewport. 
-       If you want *only* the right column to scroll, you must define a fixed height for it. 
-       We'll keep the current approach for now. */
 }
 
 .right-column-wrapper h2 {
@@ -110,17 +105,20 @@ h1, h2 {
 }
 
 /* Base styles for content loaded into the right column */
-.content-section p {
+.content-section p, 
+.right-column-wrapper p {
     color: #ddd;
     line-height: 1.5;
     margin-bottom: 16px;
+    /* KEY CHANGE: Preserve spacing and line breaks */
+    white-space: pre-wrap; 
 }
 
 .content-section {
     padding: 32px 0;
 }
 
-/* TIMELINE (These styles must be present in the main CSS, even if used in works.html) */
+/* TIMELINE (Must be here since content is dynamic) */
 .timeline {
     position: relative;
     padding: 20px 0 2px 30px;
@@ -167,14 +165,14 @@ h1, h2 {
     color: #ccc;
 }
 
-/* POPUP GALLERY (These styles must be present in the main CSS) */
+/* POPUP GALLERY (Must be here since content is dynamic) */
 #columnPopup {
-    position: fixed; /* Use fixed since it covers the entire viewport */
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.9); /* Darker background for focus */
+    background: rgba(0,0,0,0.9);
     display: none;
     justify-content: center;
     align-items: center;
@@ -183,14 +181,14 @@ h1, h2 {
 }
 
 #columnPopup img,
-#columnPopup video { /* Apply styles to both img and video */
+#columnPopup video { 
     max-width: 90%; 
     max-height: 90%;
     box-shadow: 0 0 20px rgba(0,0,0,0.8);
     object-fit: contain;
-    opacity: 1; /* Ensure full visibility */
+    opacity: 1; 
     transition: opacity 0.3s ease;
-    cursor: default; /* Change cursor on media */
+    cursor: default; 
 }
 
 .gallery-btn {
@@ -230,7 +228,7 @@ h1, h2 {
         padding-right: 0;
         justify-content: flex-start;
         align-items: flex-start;
-        height: auto; /* Remove fixed height on mobile */
+        height: auto; 
     }
 
     .left-content {
@@ -242,7 +240,7 @@ h1, h2 {
 
     .left-content nav a {
         display: inline-block;
-        margin: 0 10px 10px 0; /* Inline links with spacing */
+        margin: 0 10px 10px 0; 
     }
 
     .right-column-wrapper {
@@ -303,19 +301,17 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.forEach(link => link.classList.remove('active'));
     }
 
-    // Function to load content dynamically
+    // Function to load content dynamically via fetch
     async function loadContent(fileName) {
         try {
-            // Fetch the HTML content
             const response = await fetch(fileName);
             if (!response.ok) {
                 throw new Error(`Failed to load content file: ${fileName}`);
             }
             const htmlContent = await response.text();
 
-            // Insert the HTML into the right column
             rightColumn.innerHTML = htmlContent;
-            rightColumn.scrollTop = 0; // Scroll to top of new content
+            window.scrollTo(0, 0); // Scroll page to top, or use rightColumn.scrollTop = 0; if you want the right column only to scroll.
 
             // After loading, re-attach event listeners for the gallery
             attachGalleryTriggers(); 
@@ -332,13 +328,10 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
 
-            // Get the file name from the data attribute
             const contentFile = this.getAttribute('data-content-file');
             if (contentFile) {
-                // Load the new content
                 loadContent(contentFile);
                 
-                // Update active class
                 removeActiveClasses();
                 this.classList.add('active');
             }
@@ -346,8 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- INITIAL LOAD ---
-
-    // Find the link corresponding to the default file and click it
+    // Simulates a click on the default link to load content on page load
     const initialLink = document.querySelector(`a[data-content-file="${defaultFile}"]`);
     if (initialLink) {
         initialLink.click();
@@ -355,14 +347,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ----------------------------------------------------
-    // --- GALLERY POPUP (Modified to attach after load) ---
+    // --- GALLERY POPUP LOGIC ---
     // ----------------------------------------------------
     
     let currentGallery = [];
     let currentIndex = 0;
-    let keyboardListenerAdded = false; // Flag to ensure keyboard listener is only added once
+    let keyboardListenerAdded = false; 
 
     function clearMedia(popup) {
+        // Remove existing media (img/video) elements inside popup
         popup.querySelectorAll('img, video').forEach(el => {
             if (el.tagName && el.tagName.toLowerCase() === 'video') {
                 try { el.pause(); } catch (err) {}
@@ -407,14 +400,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    // Attaches all gallery-related events after new content is loaded
     function attachGalleryTriggers() {
         const popup = document.getElementById('columnPopup');
-        if (!popup) return; 
+        if (!popup) return; // Exit if the content doesn't have the popup structure
 
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         
-        // ATTACH TRIGGER EVENT
+        // Define trigger handler
         const galleryTriggerHandler = function(e) {
              e.preventDefault();
              currentGallery = e.currentTarget.dataset.images.split(',').map(x => x.trim()).filter(x => x.length);
@@ -423,14 +417,13 @@ document.addEventListener('DOMContentLoaded', () => {
              popup.style.display = 'flex';
         };
 
-        // Attach event listener only to elements in the newly loaded content
+        // Attach event listener to current gallery triggers
         document.querySelectorAll('.gallery-trigger').forEach(item => {
-            // Clear old listeners before attaching new ones
             item.removeEventListener('click', galleryTriggerHandler);
             item.addEventListener('click', galleryTriggerHandler);
         });
         
-        // ATTACH NAV BUTTON EVENTS (Using property assignment to prevent duplicates)
+        // ATTACH NAV BUTTON EVENTS
         nextBtn.onclick = (e) => {
             e.stopPropagation();
             if (!currentGallery.length) return;
@@ -445,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showMedia(popup, prevBtn, nextBtn, currentIndex);
         };
 
-        // ATTACH CLOSE EVENT
+        // ATTACH CLOSE EVENT (Only on background click)
         popup.onclick = (e) => {
             if (e.target === popup) {
                 popup.style.display = 'none';
@@ -455,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // ATTACH KEYBOARD EVENTS (Ensure only one listener on the document)
+        // ATTACH KEYBOARD EVENTS (Add only once to the document)
         if (!keyboardListenerAdded) {
             document.addEventListener('keydown', keyboardHandler);
             keyboardListenerAdded = true;
