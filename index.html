@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>hi i'm paul</title>
     <link rel="icon" href="images/tinyguru3-10px_small.png" type="image/png">
 
 <style>
-    
+/* -------------------------------------- */
+/* BASE STYLES */
+/* -------------------------------------- */
 body {
     background-color: #000;
     color: #fff;
@@ -37,7 +38,7 @@ h1, h2 {
     align-items: flex-start;
 }
 
-/* LEFT COLUMN */
+/* LEFT COLUMN (STICKY NAV) */
 .left-column {
     flex-basis: 33.33%;
     flex-shrink: 0;
@@ -88,23 +89,28 @@ h1, h2 {
     font-weight: bold;
 }
 
-/* RIGHT COLUMN */
+/* RIGHT COLUMN (Content area where new files are loaded) */
 .right-column-wrapper {
     flex-basis: 66.66%;
     flex-grow: 1;
-    overflow-y: auto;
     margin-top: 0.5vh;
     padding-top: 16vh;
     padding-left: 20px;
     box-sizing: border-box;
     position: relative;
+    /* Since content is replaced, overflow-y is not strictly needed here, 
+       but if loaded content is long, it should scroll the document or the wrapper. 
+       Let's assume document scroll for simplicity if content exceeds viewport. 
+       If you want *only* the right column to scroll, you must define a fixed height for it. 
+       We'll keep the current approach for now. */
 }
 
 .right-column-wrapper h2 {
     margin: 0 0 8px 0;
 }
 
-#about-me p, .right-column-wrapper p {
+/* Base styles for content loaded into the right column */
+.content-section p {
     color: #ddd;
     line-height: 1.5;
     margin-bottom: 16px;
@@ -114,7 +120,7 @@ h1, h2 {
     padding: 32px 0;
 }
 
-/* TIMELINE */
+/* TIMELINE (These styles must be present in the main CSS, even if used in works.html) */
 .timeline {
     position: relative;
     padding: 20px 0 2px 30px;
@@ -161,54 +167,56 @@ h1, h2 {
     color: #ccc;
 }
 
-/* POPUP GALLERY */
+/* POPUP GALLERY (These styles must be present in the main CSS) */
 #columnPopup {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  cursor: pointer;
+    position: fixed; /* Use fixed since it covers the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9); /* Darker background for focus */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+    cursor: pointer;
 }
 
-#columnPopup img {
-  max-width: 99%;
-  max-height: 99%;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  object-fit: contain;
-  opacity: 0.94; /* preserve original opacity */
-  transition: opacity 0.3s ease;
-  cursor: pointer;
+#columnPopup img,
+#columnPopup video { /* Apply styles to both img and video */
+    max-width: 90%; 
+    max-height: 90%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    object-fit: contain;
+    opacity: 1; /* Ensure full visibility */
+    transition: opacity 0.3s ease;
+    cursor: default; /* Change cursor on media */
 }
 
 .gallery-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 2em;
-  cursor: pointer;
-  padding: 20px;
-  user-select: none;
-  z-index: 10000;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2em;
+    cursor: pointer;
+    padding: 20px;
+    user-select: none;
+    z-index: 10000;
 }
 
 #prevBtn { left: 30px; }
 #nextBtn { right: 30px; }
 
 .gallery-btn:hover {
-  color: #b3ff00;
+    color: #b3ff00;
 }
 
 /* -------------------------------------- */
 /* MOBILE RESPONSIVE */
+/* -------------------------------------- */
 @media (max-width: 800px) {
     .main-container {
         width: 84%;
@@ -222,6 +230,7 @@ h1, h2 {
         padding-right: 0;
         justify-content: flex-start;
         align-items: flex-start;
+        height: auto; /* Remove fixed height on mobile */
     }
 
     .left-content {
@@ -233,7 +242,7 @@ h1, h2 {
 
     .left-content nav a {
         display: inline-block;
-        margin: 0;
+        margin: 0 10px 10px 0; /* Inline links with spacing */
     }
 
     .right-column-wrapper {
@@ -243,12 +252,15 @@ h1, h2 {
     }
 }
 
-.gallery-btn {
-    font-size: 2.5em;
-    padding: 10px;
-  }
+@media (max-width: 600px) {
+    .gallery-btn {
+        font-size: 2em;
+        padding: 10px;
+    }
+    #prevBtn { left: 5px; }
+    #nextBtn { right: 5px; }
 }
-    
+
 </style>
 </head>
 
@@ -256,217 +268,223 @@ h1, h2 {
 
 <div class="main-container">
 
-  <!-- LEFT COLUMN -->
     <div class="left-column">
-    <div class="left-content">
-        <h1>Paul Arthur</h1>
-        <br>
-        <h2>Creative Technologist</h2>
+        <div class="left-content">
+            <h1>Paul Arthur</h1>
+            <br>
+            <h2>Creative Technologist</h2>
 
-        <div class="description-text">
-            Audio / Visual Artist and Storyteller
+            <div class="description-text">
+                Audio / Visual Artist and Storyteller
+            </div>
+
+            <nav>
+                <a href="#" class="nav-link" data-content-file="about.html">about &ensp;</a>
+                <a href="#" class="nav-link" data-content-file="works.html">works &ensp;</a>
+            </nav>
         </div>
-
-        <nav>
-            <a href="#about-me">about &ensp;</a>
-            <a href="#projects">music &ensp;</a>
-            <a href="#projects">recap &ensp;</a>
-            <a href="#projects">shows &ensp;</a>
-        </nav>
-    </div>
     </div>
 
-  <!-- RIGHT COLUMN -->
-  <div class="right-column-wrapper">
-
-    <section id="about-me" class="content-section">
-      <h2>about</h2>
-      <p> 
-        DJ, Producer, Storyteller
-      </p> 
-    </section>
-
-    <section id="projects" class="content-section">
-      <h2>works</h2>
-        <br> 
-
-        <!-- TIMELINE -->
-
-        <a href="#" class="timeline-item-link gallery-trigger" data-images="images/b3d_ca-synthocean-frame89-3k-EP-Merch1.png, images/0001-0096-3k-24fps.mp4">
-            <div class="timeline-date">2021</div>
-            <div class="timeline-title">Endless Bloom EP</div>
-            <p style="color: #ddd;">My goal with this project was to see if I could write and produce an electronic music project, craft 3D visuals that matched the sonic aesthetic, package it, pitch it to a label distributor, and have them agree to sign and release the project. Thank you to my partners at, Symphonic!</p>
-        </a>
-
-        <!-- POPUP GALLERY -->
-          <div id="columnPopup">
-            <button id="prevBtn" class="gallery-btn">&#10094;</button>
-            <img id="popupImage" src="" alt="Popup Image">
-            <button id="nextBtn" class="gallery-btn">&#10095;</button>
-          </div>      
-      </div>
-    </section>
-
-    <!-- END -->
-      <div style="height: 80px;">
-      <p>&ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; Design by artsandtoys.</p>
-      <br><br>
-      <p>&ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; <a href="#"><b><i>Fin.</i></b></a></p>
-      </div>
-
-  </div>
+    <div class="right-column-wrapper">
+        <p>Loading content...</p>
+    </div>
 </div>
     
 <script>
-        
- // -- NAV ACTIVE LINKS --
- document.addEventListener('DOMContentLoaded', () => {
-  const navLinks = document.querySelectorAll('.left-content nav a');
+document.addEventListener('DOMContentLoaded', () => {
 
-  function removeActiveClasses() {
-    navLinks.forEach(link => link.classList.remove('active'));
-  }
+    const rightColumn = document.querySelector('.right-column-wrapper');
+    const navLinks = document.querySelectorAll('.left-content nav a.nav-link');
+    const defaultFile = 'about.html'; 
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', function() {
-      removeActiveClasses();
-      this.classList.add('active');
-    });
-  });
+    // --- UTILITY FUNCTIONS ---
 
-  const currentHash = window.location.hash;
-  let initialLinkFound = false;
-  if (currentHash) {
+    function removeActiveClasses() {
+        navLinks.forEach(link => link.classList.remove('active'));
+    }
+
+    // Function to load content dynamically
+    async function loadContent(fileName) {
+        try {
+            // Fetch the HTML content
+            const response = await fetch(fileName);
+            if (!response.ok) {
+                throw new Error(`Failed to load content file: ${fileName}`);
+            }
+            const htmlContent = await response.text();
+
+            // Insert the HTML into the right column
+            rightColumn.innerHTML = htmlContent;
+            rightColumn.scrollTop = 0; // Scroll to top of new content
+
+            // After loading, re-attach event listeners for the gallery
+            attachGalleryTriggers(); 
+
+        } catch (error) {
+            console.error('Content loading error:', error);
+            rightColumn.innerHTML = `<h2>Error</h2><p>Could not load content for ${fileName}. Please ensure <code>${fileName}</code> exists in the same directory.</p>`;
+        }
+    }
+
+    // --- NAV LINK CLICK HANDLER ---
+
     navLinks.forEach(link => {
-      if (link.getAttribute('href') === currentHash) {
-        link.classList.add('active');
-        initialLinkFound = true;
-      }
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Get the file name from the data attribute
+            const contentFile = this.getAttribute('data-content-file');
+            if (contentFile) {
+                // Load the new content
+                loadContent(contentFile);
+                
+                // Update active class
+                removeActiveClasses();
+                this.classList.add('active');
+            }
+        });
     });
-  }
+
+    // --- INITIAL LOAD ---
+
+    // Find the link corresponding to the default file and click it
+    const initialLink = document.querySelector(`a[data-content-file="${defaultFile}"]`);
+    if (initialLink) {
+        initialLink.click();
+    }
+
+
+    // ----------------------------------------------------
+    // --- GALLERY POPUP (Modified to attach after load) ---
+    // ----------------------------------------------------
     
-  if (!initialLinkFound && navLinks.length > 0) navLinks[0].classList.add('active');
-                          
-  // -- GALLERY POPUP --
-  const popup = document.getElementById('columnPopup');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  let currentGallery = [];
-  let currentIndex = 0;
+    let currentGallery = [];
+    let currentIndex = 0;
+    let keyboardListenerAdded = false; // Flag to ensure keyboard listener is only added once
 
-  document.querySelectorAll('.gallery-trigger').forEach(item => {
-    item.addEventListener('click', e => {
-      e.preventDefault();
-      currentGallery = item.dataset.images.split(',').map(x => x.trim()).filter(x => x.length);
-      currentIndex = 0;
-      showMedia(currentIndex);
-      popup.style.display = 'flex';
+    function clearMedia(popup) {
+        popup.querySelectorAll('img, video').forEach(el => {
+            if (el.tagName && el.tagName.toLowerCase() === 'video') {
+                try { el.pause(); } catch (err) {}
+                el.removeAttribute('src');
+            }
+            el.remove();
+        });
+    }
+
+    function showMedia(popup, prevBtn, nextBtn, index) {
+        clearMedia(popup);
+        const src = currentGallery[index];
+        if (!src) return;
+
+        const isVideo = src.match(/\.(mp4|webm)(\?.*)?$/i);
+        const insertionPoint = nextBtn; 
+
+        if (isVideo) {
+            const video = document.createElement('video');
+            video.src = src;
+            video.controls = true;
+            video.autoplay = true;
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.style.maxWidth = '100%';
+            video.style.maxHeight = '100%';
+            video.setAttribute('aria-label', 'Gallery video');
+            popup.insertBefore(video, insertionPoint);
+
+            video.addEventListener('error', (ev) => console.warn('Video error', ev));
+            video.play().catch(err => {
+                console.warn('Play promise rejected:', err);
+            });
+        } else {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = 'Gallery image';
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
+            popup.insertBefore(img, insertionPoint);
+        }
+    }
+    
+    function attachGalleryTriggers() {
+        const popup = document.getElementById('columnPopup');
+        if (!popup) return; 
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        // ATTACH TRIGGER EVENT
+        const galleryTriggerHandler = function(e) {
+             e.preventDefault();
+             currentGallery = e.currentTarget.dataset.images.split(',').map(x => x.trim()).filter(x => x.length);
+             currentIndex = 0;
+             showMedia(popup, prevBtn, nextBtn, currentIndex);
+             popup.style.display = 'flex';
+        };
+
+        // Attach event listener only to elements in the newly loaded content
+        document.querySelectorAll('.gallery-trigger').forEach(item => {
+            // Clear old listeners before attaching new ones
+            item.removeEventListener('click', galleryTriggerHandler);
+            item.addEventListener('click', galleryTriggerHandler);
+        });
+        
+        // ATTACH NAV BUTTON EVENTS (Using property assignment to prevent duplicates)
+        nextBtn.onclick = (e) => {
+            e.stopPropagation();
+            if (!currentGallery.length) return;
+            currentIndex = (currentIndex + 1) % currentGallery.length;
+            showMedia(popup, prevBtn, nextBtn, currentIndex);
+        };
+
+        prevBtn.onclick = (e) => {
+            e.stopPropagation();
+            if (!currentGallery.length) return;
+            currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+            showMedia(popup, prevBtn, nextBtn, currentIndex);
+        };
+
+        // ATTACH CLOSE EVENT
+        popup.onclick = (e) => {
+            if (e.target === popup) {
+                popup.style.display = 'none';
+                const vid = popup.querySelector('video');
+                if (vid) vid.pause();
+                clearMedia(popup); 
+            }
+        };
+
+        // ATTACH KEYBOARD EVENTS (Ensure only one listener on the document)
+        if (!keyboardListenerAdded) {
+            document.addEventListener('keydown', keyboardHandler);
+            keyboardListenerAdded = true;
+        }
+    }
+    
+    // KeyDown Handler Definition
+    function keyboardHandler(e) {
+        const popup = document.getElementById('columnPopup');
+        if (popup && popup.style.display === 'flex') {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (e.key === 'Escape') {
+                popup.querySelectorAll('video').forEach(v => { try { v.pause(); } catch (err) {} });
+                popup.style.display = 'none';
+                clearMedia(popup);
+            }
+            if (e.key === 'ArrowRight' && nextBtn) nextBtn.click();
+            if (e.key === 'ArrowLeft' && prevBtn) prevBtn.click();
+        }
+    }
+    
+    // --- Disable right-click on the entire page --- 
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        alert("Right-click is disabled on this page.");
     });
-  });
-
-  function clearMedia() {
-    // remove any existing img/video elements inside popup
-    popup.querySelectorAll('img, video').forEach(el => {
-      // if video, pause first
-      if (el.tagName && el.tagName.toLowerCase() === 'video') {
-        try { el.pause(); } catch (err) {}
-        el.removeAttribute('src');
-      }
-      el.remove();
-    });
-  }
-
-  // NEW UPDATED ADDED VIDEO
-  function showMedia(index) {
-    clearMedia();
-    const src = currentGallery[index];
-    if (!src) return;
-
-    const isVideo = src.match(/\.(mp4|webm)(\?.*)?$/i);
-
-    if (isVideo) {
-      const video = document.createElement('video');
-      video.src = src;
-      video.controls = true;
-      video.autoplay = true;
-      video.muted = true;
-      video.loop = true; 
-      video.playsInline = true;
-      video.style.maxWidth = '100%';
-      video.style.maxHeight = '100%';
-      video.setAttribute('aria-label', 'Gallery video');
-      // Insert before nextBtn so prev/next remain visible
-      popup.insertBefore(video, nextBtn);
-
-      // handle playback errors in console for debugging
-      video.addEventListener('error', (ev) => console.warn('Video error', ev));
-      // ensure it attempts to play (catch promise rejection)
-      video.play().catch(err => {
-        // most likely autoplay blocked if not muted; we set muted true above
-        console.warn('Play promise rejected:', err);
-      });
-    } else {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = 'Gallery image';
-      img.style.maxWidth = '100%';
-      img.style.maxHeight = '100%';
-      popup.insertBefore(img, nextBtn);
-    }
-  }
-
-  // NEXT
-  nextBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    if (!currentGallery.length) return;
-    currentIndex = (currentIndex + 1) % currentGallery.length;
-    showMedia(currentIndex);
-  });
-
-  // PREV     
-  prevBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    if (!currentGallery.length) return;
-    currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
-    showMedia(currentIndex);
-  });
-
-  // CLOSE
-  //popup.addEventListener('click', e => {
-  //  if (e.target === popup || e.target === popupImage) popup.style.display = 'none';
-  //});
-
-  // CLOSE
-  popup.addEventListener('click', e => {
-  // close if click is outside media or on the popup background
-  if (e.target === popup || e.target.tagName === 'VIDEO' || e.target.tagName === 'IMG') {
-    popup.style.display = 'none';
-    // pause video if it exists
-    const vid = popup.querySelector('video');
-    if (vid) vid.pause();
-    }
-  });
-
-
-  // KEYBOARD
-  document.addEventListener('keydown', e => {
-    if (popup.style.display === 'flex') {
-      if (e.key === 'Escape') {
-        popup.querySelectorAll('video').forEach(v => { try { v.pause(); } catch (err) {} });
-        popup.style.display = 'none';
-        clearMedia();
-      }
-      if (e.key === 'ArrowRight') nextBtn.click();
-      if (e.key === 'ArrowLeft') prevBtn.click();
-    }
-  });
- });
-
-  // -- Disable right-click on the entire page -- 
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-    alert("Right-click is disabled on this page.");
-  });
+});
 </script>
 
 </body>
