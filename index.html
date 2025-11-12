@@ -94,7 +94,6 @@ h1, h2 {
     flex-basis: 66.66%;
     flex-grow: 1;
     margin-top: 0.5vh;
-    /* Removed padding-top: 16vh; to move it to the first-child selector below */
     padding-left: 20px;
     box-sizing: border-box;
     position: relative;
@@ -122,7 +121,7 @@ h1, h2 {
     padding: 32px 0;
 }
 
-/* HOME PAGE IMAGE STYLES */
+/* HOME PAGE IMAGE STYLES (Kept for now, just in case you use it later) */
 .home-image-container {
     width: 100%;
 }
@@ -297,9 +296,8 @@ h1, h2 {
             </div>
 
             <nav>
-                <a href="#" class="nav-link" data-content-file="home.html">home &ensp;</a>
-                <a href="#" class="nav-link" data-content-file="about.html">about &ensp;</a>
-                <a href="#" class="nav-link" data-content-file="audio.html">works &ensp;</a>
+                <a href="about" class="nav-link" data-content-file="about.html">about &ensp;</a>
+                <a href="works" class="nav-link" data-content-file="catalog.html">works &ensp;</a>
             </nav>
         </div>
     </div>
@@ -314,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const rightColumn = document.querySelector('.right-column-wrapper');
     const navLinks = document.querySelectorAll('.left-content nav a.nav-link');
-    const defaultFile = 'home.html'; // <<< UPDATED DEFAULT FILE
+    const defaultFile = 'about.html'; // <<< RESET TO ABOUT.HTML
 
     // --- UTILITY FUNCTIONS ---
 
@@ -359,6 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- INITIAL LOAD ---
+    // Loads the defaultFile (now 'about.html') when the page loads
     const initialLink = document.querySelector(`a[data-content-file="${defaultFile}"]`);
     if (initialLink) {
         initialLink.click();
