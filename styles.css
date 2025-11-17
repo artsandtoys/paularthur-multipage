@@ -120,10 +120,10 @@ h1, h2 {
     object-fit: cover;
 }
 
-/* TIMELINE STYLES T, L, B, R */
+/* TIMELINE STYLES T 12, L, B 2, R */
 .timeline {
     position: relative;
-    padding: 12px 0 0px 30px;
+    padding: 2px 0 0px 30px;
 }
 
 .timeline::before {
