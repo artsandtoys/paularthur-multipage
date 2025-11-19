@@ -92,21 +92,6 @@ h1, h2 {
     margin: 0 0 8px 0;
 }
 
-/* spacing T, L, B, R */
-.content-section {
-    padding: 32.5px 0; /* */
-}
-
-/* Base styles for content loaded into the right column */
-.content-section p, 
-.right-column-wrapper p {
-    color: #ddd;
-    line-height: 1.5;
-    margin-bottom: 16px;
-    /* KEY FOR SPACING */
-    /* white-space: pre-wrap; */
-}
-
 /* DEFAULT SPLASH IMAGE STYLES */
 .home-image-container {
     width: 100%;
@@ -120,6 +105,22 @@ h1, h2 {
     height: auto;
     object-fit: cover;
 }
+
+/* spacing T, L, B, R */
+.content-section {
+    padding: 32.5px 0; /* */
+}
+
+/*
+/* Base styles for content loaded into the right column */
+.content-section p, 
+.right-column-wrapper p {
+    color: #ddd;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    /* KEY FOR SPACING */
+    /* white-space: pre-wrap; */
+}*/
 
 /* spacing T, L, B, R */
 .timeline {
@@ -224,7 +225,7 @@ h1, h2 {
 /* MOBILE RESPONSIVE */
 @media (max-width: 800px) {
     .main-container {
-        width: 84%;
+        /* width: 84%; */
         flex-direction: column;
         margin: 0px 4px;
     }
