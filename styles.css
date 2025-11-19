@@ -209,8 +209,13 @@ h1, h2 {
     z-index: 10000;
 }
 
-#prevBtn { left: 30px; }
-#nextBtn { right: 30px; }
+#prevBtn { 
+    left: 30px; 
+}
+
+#nextBtn { 
+    right: 30px; 
+}
 
 .gallery-btn:hover {
     color: #b3ff00;
@@ -261,7 +266,13 @@ h1, h2 {
     .gallery-btn {
         font-size: 2em;
         padding: 10px;
-    /* } */
-    #prevBtn { left: 5px; }
-    #nextBtn { right: 5px; }
+    }
+    
+    #prevBtn { 
+        left: 5px; 
+    }
+    
+    #nextBtn { 
+        right: 5px; 
+    }
 }
