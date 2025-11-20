@@ -230,9 +230,8 @@ h1, h2 {
     /* 1. Stack the Main Container */
     .main-container {
         width: 90%;
-        flex-direction: column;
-        padding-left: 4px;
-        padding-bottom: 8px;
+        flex-direction: column; /* Stacks Left Column on top of Right Column */
+        padding-bottom: 30px;
     }
 
     /* 2. Reset Left Column (Header area) */
@@ -240,11 +239,10 @@ h1, h2 {
         flex-basis: auto;
         width: 100%;
         height: auto;
-        position: relative;
+        position: relative; /* Removes sticky behavior */
         padding-right: 0;
-        margin-bottom: 30px;
-        border-bottom: 1px solid #333; 
-        padding-bottom: 20px;
+        margin-bottom: 10px; /* Small space before content starts */
+        /* Border removed as requested */
     }
 
     .left-content {
@@ -252,25 +250,21 @@ h1, h2 {
         margin-top: 40px;
     }
 
-    /* --- HORIZONTAL NAV (Clean Version) --- */
-    
-    /* Flexbox to align items horizontally */
+    /* --- HORIZONTAL NAV (Plain Text) --- */
     .left-content nav {
         display: flex;
-        flex-direction: row; /* Layout side-by-side */
-        flex-wrap: wrap; /* Allow wrapping if screen is too narrow */
-        gap: 20px; /* The space between the links */
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px; /* Space between links */
         margin-top: 10px;
     }
 
-    /* Remove vertical margins from base styles */
     .left-content nav a {
         display: inline-block;
-        margin: 0; 
+        margin: 0; /* Removes vertical spacing */
         padding: 5px 0;
-        /* No extra styling added here, just positioning */
     }
-    /* -------------------------------------- */
+    /* ----------------------------------- */
 
     /* 3. Reset Right Column (Content) */
     .right-column-wrapper {
