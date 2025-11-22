@@ -16,7 +16,6 @@ h1, h2 {
     margin-bottom: 0;
 }
 
-/* MAIN CONTAINER */
 .main-container {
     width: 75%;
     max-width: 1200px;
@@ -27,7 +26,7 @@ h1, h2 {
     align-items: flex-start;
 }
 
-/* LEFT COLUMN (STICKY NAV) */
+/* (STICKY NAV) */
 .left-column {
     flex-basis: 33.33%;
     flex-shrink: 0;
@@ -78,7 +77,6 @@ h1, h2 {
     font-weight: bold;
 }
 
-/* RIGHT COLUMN WRAPPER */
 .right-column-wrapper {
     flex-basis: 66.66%;
     flex-grow: 1;
@@ -111,7 +109,7 @@ h1, h2 {
     padding: 32px 0;
 }
 
-/* Base styles for content loaded into the right column */
+/* content loaded into the right column */
 .content-section p, 
 .right-column-wrapper p {
     color: #ddd;
@@ -221,10 +219,6 @@ h1, h2 {
     color: #b3ff00;
 }
 
-/* =========================================
-   MOBILE / TABLET MEDIA QUERY
-   Target: Screens smaller than 768px
-   ========================================= */
 @media screen and (max-width: 768px) {
 
     /* 1. Stack the Main Container */
