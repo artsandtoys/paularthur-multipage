@@ -193,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         alert("Right-click is disabled on this page.");
     });
+});
 
     // --- NEW 9x9 GRID LIGHTBOX FUNCTIONS (Place at the end of your JS file) ---
 
@@ -228,6 +229,4 @@ function closeLightbox() {
     document.getElementById('lightbox-image').src = '';
 }
     // end
-});
-
 
