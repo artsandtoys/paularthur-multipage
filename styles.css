@@ -241,7 +241,7 @@ h1, h2 {
        We only need to ensure the image fills its grid cell and has square dimensions. */
     width: 100%; 
     /* Important: This ensures the image fills the 1fr height */
-    /* height: 50%; */ 
+    /* height: 100%; */ 
     /* Optional: Forces cells to be square for a classic grid look */
     /* aspect-ratio: 1 / 1; */ 
     
