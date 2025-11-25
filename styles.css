@@ -246,6 +246,23 @@ h1, h2 {
     display: block;
     object-fit: cover; 
 }
+/* --- Lightbox/Dimming Effect (Recap of centering logic) --- */
+.lightbox {
+    display: none; /* Changed to 'flex' when opened by JS */
+    position: fixed;
+    /* ... other properties ... */
+
+    /* These properties ensure the image is centered when display is 'flex' */
+    justify-content: center; /* Centers horizontally */
+    align-items: center;    /* Centers vertically */
+}
+
+/* We don't need the 'transform' hack on the image itself if we use the above: */
+.lightbox-content {
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+}
 
 @media screen and (max-width: 768px) {
 
