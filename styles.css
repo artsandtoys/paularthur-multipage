@@ -249,7 +249,8 @@ h1, h2 {
 /* --- Lightbox/Dimming Effect (Recap of centering logic) --- */
 .lightbox {
     display: none; /* Changed to 'flex' when opened by JS */
-    position: fixed;
+    position: absolute;
+    z-index: 100;
     justify-content: center; /* Centers horizontally */
     align-items: center;    /* Centers vertically */
 }
