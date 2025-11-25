@@ -194,3 +194,40 @@ document.addEventListener('DOMContentLoaded', () => {
         alert("Right-click is disabled on this page.");
     });
 });
+
+// --- NEW 9x9 GRID LIGHTBOX FUNCTIONS ---
+
+function openLightbox(element) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+
+    // Get the full-size image source from the data-full-src attribute
+    const fullSrc = element.getAttribute('data-full-src');
+    if (!fullSrc) {
+        console.error('Image element missing data-full-src attribute.');
+        return;
+    }
+
+    // Set the full-size image source
+    lightboxImage.src = fullSrc;
+
+    // Display the lightbox and dim the background
+    lightbox.style.display = 'flex'; // Use 'flex' to enable centering via CSS
+    
+    // Optional: Add a class to the body to prevent background scrolling
+    document.body.classList.add('lightbox-active');
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    
+    // Hide the lightbox
+    lightbox.style.display = 'none';
+    
+    // Optional: Remove the class to allow background scrolling again
+    document.body.classList.remove('lightbox-active');
+    
+    // Clear the image source to save memory/stop loading if interrupted
+    document.getElementById('lightbox-image').src = '';
+}
+// ----------------------------------------
