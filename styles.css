@@ -240,7 +240,7 @@ h1, h2 {
     /* In CSS Grid, the image width is handled automatically by the '1fr' columns. 
        We only need to ensure the image fills its grid cell and has square dimensions. */
     width: 100%; 
-    height: 100%; /* Important: This ensures the image fills the 1fr height */
+    /* height: 100%; */ /* Important: This ensures the image fills the 1fr height */
     aspect-ratio: 1 / 1; /* Optional: Forces cells to be square for a classic grid look */
     
     cursor: pointer;
