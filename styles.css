@@ -26,7 +26,7 @@ h1, h2 {
     align-items: flex-start;
 }
 
-/* (STICKY NAV) */
+/* STICKY NAV */
 .left-column {
     flex-basis: 33.33%;
     flex-shrink: 0;
@@ -90,12 +90,13 @@ h1, h2 {
     margin: 0 0 8px 0;
 }
 
-/* DEFAULT SPLASH IMAGE STYLES */
+/* SPLASH IMAGE STYLES */
 .home-image-container {
     width: 100%;
     line-height: 0; /* Prevents extra space below the image */
 }
 
+/* SPLASH IMAGE IMAGE */
 .home-image-container img {
     display: block;
     width: 100%;
